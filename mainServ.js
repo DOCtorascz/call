@@ -1,36 +1,31 @@
 const express = require('express');
-const cors = require('cors');
-const https = require('https');
-
+const fetch = require('node-fetch');  // Импортирование node-fetch
 const app = express();
-const PORT = 3000;
+const port = 3000;
 
-// Включение CORS
-app.use(cors());
+// Ваш API ключ
+const API_KEY = '66cb84e2bc25a2f';
+const BASE_URL = 'https://export-base.ru/api/company/';
 
-// Обработка запросов на /proxy
 app.get('/proxy', async (req, res) => {
-    const apiUrl = `https://export-base.ru/api/company/?ogrn=1020300967642&key=66cb84e2bc25a2f`;
+    const ogrn = req.query.ogrn || '1020300967642';  // Параметр по умолчанию, если не указан
+
+    const apiUrl = `${BASE_URL}?ogrn=${ogrn}&key=${API_KEY}`;
 
     try {
-        // Импортируем fetch динамически
-        const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
-        const agent = new https.Agent({ rejectUnauthorized: false });
-        const response = await fetch(apiUrl, { agent });
-
+        const response = await fetch(apiUrl);
         if (!response.ok) {
-            throw new Error('Ошибка при запросе к API');
+            throw new Error(`Ошибка при запросе к удаленному API: ${response.statusText}`);
         }
-
         const data = await response.json();
-        return res.json(data);
+        res.json(data);
+        console.log('пришёл')
     } catch (error) {
-        console.error('Ошибка при запросе к API:', error.message);
-        return res.status(500).json({ error: 'Ошибка сервера' });
+        console.error('Ошибка:', error);
+        res.status(500).send('Ошибка при запросе к удаленному API');
     }
 });
 
-// Запуск сервера
-app.listen(PORT, () => {
-    console.log(`Сервер запущен на http://localhost:${PORT}`);
+app.listen(port, () => {
+    console.log(`Прокси-сервер запущен по адресу http://localhost:${port}`);
 });
