@@ -1,0 +1,65 @@
+body {
+    background: #3c0707;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+*,
+*:before,
+*:after {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+img {
+    vertical-align: top;
+}
+
+li {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+button {
+    background: none;
+    cursor: pointer;
+    border: none;
+}
+
+.api__inner {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: white;
+}
+
+.api__name {
+    font-size: 30px;
+    margin-bottom: 20px;
+}
+
+.api__btn {
+    font-size: 20px;
+    padding: 20px 30px;
+    color: white;
+    border: 1px solid white;
+    border-radius: 25px;
+    transition: 1s;
+}
+
+.api__btn:hover {
+    background-color: rgba(255, 255, 255, 0.43);
+    color: rgb(64, 16, 16);
+    transition: 1s;
+    border: 1px solid transparent;
+}
