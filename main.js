@@ -1,7 +1,7 @@
 const btnStart = document.getElementById('fetch-data');
 
 const fetchNewCompanies = async () => {
-    const url = 'http://localhost:3000/proxy';
+    const url = 'http://77.222.42.27:3000/proxy';
 
     const params = {
         key: '66cb84e2bc25a2f',

@@ -3,6 +3,12 @@ const fetch = require('node-fetch');  // Импортирование node-fetch
 const app = express();
 const port = 3000;
 
+app.use((req, res, next) => {
+    res.header("Access-Control-Allow-Origin", "*"); // или укажите конкретный домен
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
+
 // Ваш API ключ
 const API_KEY = '66cb84e2bc25a2f';
 const BASE_URL = 'https://export-base.ru/api/company/';
