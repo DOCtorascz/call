@@ -16,8 +16,7 @@ const fetchNewCompanies = async () => {
             throw new Error(`Ошибка: ${response.statusText}`);
         }
         const data = await response.json();
-        // companySee(data)
-        console.log(data)
+        companySee(data)
     } catch (error) {
         console.error('Ошибка:', error);
     }
@@ -26,7 +25,6 @@ const fetchNewCompanies = async () => {
 btnStart.addEventListener('click', fetchNewCompanies)
 
 const companySee = (data) => {
-    console.log(data)
     data.companies_data.forEach(element => {
         contactAdd(element)
     });
@@ -35,7 +33,7 @@ const companySee = (data) => {
 const contactAdd = (element) => {
     const formData = new FormData();
     formData.append('public_key', '34c599b4bbff31c7d17a283ef823a91a');
-    formData.append('phone', element.phones[0]);
+    formData.append('phone', element.mobile_phone);
     formData.append('legal_name', element.legal_name);
     formData.append('campaign_id', '360579384');
     formData.append('text', 'Здравствуйте! Нажмите 1 для получения информации о продукте, 2 для связи с оператором.');
