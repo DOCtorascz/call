@@ -10,14 +10,15 @@ app.use((req, res, next) => {
 });
 
 // Ваш API ключ
-const API_KEY = '66cb84e2bc25a2f';
-const BASE_URL = 'https://export-base.ru/api/company/';
+const API_KEY = 'a1bf2182e0734a2';
+const BASE_URL = 'https://export-base.ru/api/new_company/';
 
 app.get('/proxy', async (req, res) => {
-    const ogrn = req.query.ogrn || '1020300967642';  // Параметр по умолчанию, если не указан
+    const yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
+    const REG_DATE = yesterday.toISOString().split('T')[0];
 
-    const apiUrl = `${BASE_URL}?ogrn=${ogrn}&key=${API_KEY}`;
-
+    const apiUrl = `${BASE_URL}?main_okved_code=${req.query.okved}&id_region=${req.query.region}&key=${API_KEY}&limit=${req.query.limit}`;
     try {
         const response = await fetch(apiUrl);
         if (!response.ok) {
@@ -25,7 +26,21 @@ app.get('/proxy', async (req, res) => {
         }
         const data = await response.json();
         res.json(data);
-        console.log('пришёл')
+    } catch (error) {
+        console.error('Ошибка:', error);
+        res.status(500).send('Ошибка при запросе к удаленному API');
+    }
+});
+
+app.get('/proxySum', async (req, res) => {
+    const apiUrl = `https://export-base.ru/api/balance/?key=${API_KEY}`;
+    try {
+        const response = await fetch(apiUrl);
+        if (!response.ok) {
+            throw new Error(`Ошибка при запросе к удаленному API: ${response.statusText}`);
+        }
+        const data = await response.json();
+        res.json(data);
     } catch (error) {
         console.error('Ошибка:', error);
         res.status(500).send('Ошибка при запросе к удаленному API');

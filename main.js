@@ -1,10 +1,12 @@
 const btnStart = document.getElementById('fetch-data');
 
 const fetchNewCompanies = async () => {
-    const url = 'http://77.222.42.27:3000/proxy';
+    const url = 'http://localhost:3000/proxy';
 
     const params = {
         key: '66cb84e2bc25a2f',
+        region: '75',
+        okved: '62.01',
     };
 
     const queryString = new URLSearchParams(params).toString();
@@ -16,7 +18,8 @@ const fetchNewCompanies = async () => {
             throw new Error(`Ошибка: ${response.statusText}`);
         }
         const data = await response.json();
-        companySee(data)
+        // companySee(data)
+        console.log(data)
     } catch (error) {
         console.error('Ошибка:', error);
     }
